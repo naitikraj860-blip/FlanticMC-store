@@ -146,14 +146,14 @@ a{color:inherit;text-decoration:none}
 <body>
 <header class="topbar">
  <a class="top-link" href="#" onclick="showHome();return false">← Homepage</a>
- <img class="center-logo" src="assets/images/logo.png" alt="" onerror="this.style.display='none'">
+ <img class="center-logo" src="assets/logo.png" alt="" onerror="this.style.display='none'">
  <a class="top-link" href="https://discord.gg/4AWzyq63SP" target="_blank" rel="noopener">Discord</a>
 </header>
 <main class="container">
 <section id="home" class="view active">
  <div class="welcome">
   <div class="welcome-left">
-   <img class="logo-image" src="assets/images/logo.png" alt="" onerror="this.style.visibility='hidden'">
+   <img class="logo-image" src="assets/logo.png" alt="" onerror="this.style.visibility='hidden'">
    <div><h1>FLANTICMC</h1><p>Welcome to our store!</p></div>
   </div>
   <span class="preview-label">PRICE LIST · PREVIEW ONLY</span>
@@ -162,15 +162,15 @@ a{color:inherit;text-decoration:none}
  <div class="category-grid">
   <div class="category-card" role="button" tabindex="0" onclick="showCategory('ranks')" onkeydown="keyOpen(event,'ranks')">
    <div class="category-copy"><h2>LIFESTEAL<br>RANKS</h2><p>Click to view</p></div>
-   <img class="category-image" src="assets/images/home-ranks.png" alt="" onerror="this.style.visibility='hidden'">
+   <img class="category-image" src="assets/home-ranks.png" alt="" onerror="this.style.visibility='hidden'">
   </div>
   <div class="category-card" role="button" tabindex="0" onclick="showCategory('coins')" onkeydown="keyOpen(event,'coins')">
    <div class="category-copy"><h2>LIFESTEAL<br>COINS</h2><p>Click to view</p></div>
-   <img class="category-image" src="assets/images/home-coins.png" alt="" onerror="this.style.visibility='hidden'">
+   <img class="category-image" src="assets/home-coins.png" alt="" onerror="this.style.visibility='hidden'">
   </div>
   <div class="category-card" role="button" tabindex="0" onclick="showCategory('keys')" onkeydown="keyOpen(event,'keys')">
    <div class="category-copy"><h2>CRATE<br>KEYS</h2><p>Click to view</p></div>
-   <img class="category-image" src="assets/images/home-keys.png" alt="" onerror="this.style.visibility='hidden'">
+   <img class="category-image" src="assets/home-keys.png" alt="" onerror="this.style.visibility='hidden'">
   </div>
  </div>
 
@@ -239,4 +239,20 @@ function openDetails(title,price,perks,perms){
 }
 function openSimpleDetails(title,price,desc){document.getElementById("modalTitle").textContent=title;document.getElementById("modalBody").innerHTML=`<div class="lore"><h3 class="lore-title">${esc(title)}</h3><div class="lore-section">Price:</div><div class="lore-line"><span class="arrow">▶</span><span class="lore-price">${esc(price)}</span></div><div class="lore-footer">${esc(desc)}</div></div>`;document.getElementById("detailsModal").classList.add("show")}
 function closeDetails(){document.getElementById("detailsModal").classList.remove("show")}
-async function copyServerIP(){const value="play.flaticmc.space:25568";const status=document.getElementById("copyStatus");try{await navigator.clipboard.w
+async function copyServerIP(){const value="play.flaticmc.space:25568";const status=document.getElementById("copyStatus");try{await navigator.clipboard.writeText(value);status.textContent="Server IP copied!"}catch(e){status.textContent="Server IP: "+value}}
+function renderRanks(){
+ document.getElementById("rankItems").innerHTML=rankData.filter(r=>period==="monthly"||r.weekly).map(r=>{
+  const price=period==="monthly"?r.monthly:r.weekly;
+  const perks=[...(period==="monthly"&&r.coins?[r.coins]:[]),`Access to ${r.kit}`,`Create up to ${r.ah} Auction House Listings`,...(r.vault?[`Access to ${r.vault}`]:[]),`Set up to ${r.homes} Homes`,r.prefix];
+  return `<article class="item"><img class="item-img" src="assets/${r.file}" alt="" onerror="this.style.visibility='hidden'"><div class="item-info"><h3>${esc(r.name)}</h3><div class="extra">${period==="monthly"?"[ MONTHLY · 30 DAYS ]":"[ 7 DAYS ]"}</div><div class="price">${price}</div><button class="info-btn" onclick='openDetails(${JSON.stringify(r.name)},${JSON.stringify(price)},${JSON.stringify(perks)},${JSON.stringify(r.perms)})'>View Details</button></div></article>`;
+ }).join("");
+}
+function renderSimple(data,target,desc){
+ document.getElementById(target).innerHTML=data.map(x=>`<article class="item"><img class="item-img" src="assets/${x[2]}" alt="" onerror="this.style.visibility='hidden'"><div class="item-info"><h3>${esc(x[0])}</h3><div class="price">${esc(x[1])}</div><button class="info-btn" onclick='openSimpleDetails(${JSON.stringify(x[0])},${JSON.stringify(x[1])},${JSON.stringify(desc)})'>View Details</button></div></article>`).join("");
+}
+renderRanks();
+renderSimple(coinData,"coinItems","Use /coinshop in-game to spend your coins.");
+renderSimple(keyData,"keyItems","Create a ticket on Discord to purchase this key.");
+</script>
+</body>
+</html>
