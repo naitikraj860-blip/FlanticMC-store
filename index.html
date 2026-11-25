@@ -14,8 +14,8 @@ button,a{font:inherit}
 a{color:inherit;text-decoration:none}
 .topbar{max-width:1240px;margin:auto;padding:16px 28px;display:flex;align-items:center;justify-content:space-between;color:#dce2e7;font-size:14px;font-weight:700}
 .topbar a:hover{color:var(--blue)}
-.topbar .center-logo{position:absolute;left:50%;transform:translateX(-50%);height:56px;width:150px;object-fit:contain}
-.topbar .top-link{min-width:100px}
+.topbar .center-logo{display:block;position:static;transform:none;height:56px;width:min(150px,30vw);object-fit:contain;flex:0 1 150px;min-width:0}
+.topbar .top-link{min-width:0;flex:1 1 0}
 .topbar .top-link:last-child{text-align:right}
 .container{max-width:1240px;margin:0 auto;padding:24px 28px 50px}
 .welcome{display:flex;align-items:center;justify-content:space-between;gap:20px;padding:28px 32px;border:1px solid var(--line);border-radius:13px;background:var(--panel);box-shadow:0 5px 18px #0002}
@@ -104,9 +104,9 @@ a{color:inherit;text-decoration:none}
 @media(max-width:560px){
  .container{padding:14px 14px 30px}
  .topbar{padding:12px 14px}
- .topbar .center-logo{width:116px;height:44px}
- .welcome{padding:16px;gap:12px}
- .logo-image{width:72px;height:72px;flex-basis:72px}
+ .topbar .center-logo{width:min(116px,28vw);height:44px;flex:0 1 116px}
+ .welcome{padding:16px;gap:12px;min-width:0}\n .welcome-left{gap:12px;flex:1 1 auto}\n .welcome-left>div{min-width:0}
+ .logo-image{width:clamp(52px,18vw,72px);height:clamp(52px,18vw,72px);flex:0 0 clamp(52px,18vw,72px)}
  .welcome h1{font-size:20px}
  .welcome p{font-size:14px}
  .preview-label{font-size:8px;padding:8px}
@@ -193,7 +193,7 @@ a{color:inherit;text-decoration:none}
  <button class="back" onclick="showHome()">← Homepage</button>
  <div class="section-head"><div><h2>LIFESTEAL RANKS</h2><p>Choose a package duration to view rank prices.</p></div><div class="toggle"><button class="active" onclick="setPeriod('monthly',this)">Monthly</button><button onclick="setPeriod('weekly',this)">7 Days</button></div></div>
  <div id="rankItems" class="items"></div>
- <div class="note"><b>Important Notes</b><br>Monthly ranks are valid for 30 days. 7 Days ranks are valid for 7 days only and do not include Coins. GOD Rank is available only in the Monthly package. All other perks and permissions remain the same. Create a ticket to purchase any rank.</div>
+ <div class="note"><b>Important Notes</b><br>Monthly ranks are valid for 30 days. 7 Days ranks are valid for 7 days only and do not include Coins. GOD Rank is available in both Monthly and 7 Days packages. The 7 Days GOD Rank costs ₹89. All other perks and permissions remain the same. Create a ticket to purchase any rank.</div>
 </section>
 <section id="coins" class="view">
  <button class="back" onclick="showHome()">← Homepage</button>
@@ -213,7 +213,7 @@ a{color:inherit;text-decoration:none}
 
 <script>
 const rankData=[
- {name:"GOD RANK",file:"god.png",monthly:"₹179",weekly:null,coins:"1,200 Coins",kit:"GOD Kit",ah:"25",vault:"2 Private Vaults · 54 slots each",homes:"30",prefix:"GOD Prefix",perms:["essentials.sit","spin.use","lay.use","essentials.nick","depth.use","kittycannon.use","bezooka.use","essentials.enderchest","essentials.workbench","essentials.disposal","essentials.condense","essentials.pweather","essentials.craft","essentials.hat"]},
+ {name:"GOD RANK",file:"god.png",monthly:"₹179",weekly:"₹89",coins:"1,200 Coins",kit:"GOD Kit",ah:"25",vault:"2 Private Vaults · 54 slots each",homes:"30",prefix:"GOD Prefix",perms:["essentials.sit","spin.use","lay.use","essentials.nick","depth.use","kittycannon.use","bezooka.use","essentials.enderchest","essentials.workbench","essentials.disposal","essentials.condense","essentials.pweather","essentials.craft","essentials.hat"]},
  {name:"DEADLIEST RANK",file:"deadliest.png",monthly:"₹149",weekly:"₹74",coins:"1,067 Coins",kit:"DEADLIEST Kit",ah:"18",vault:"2 Private Vaults",homes:"28",prefix:"DEADLIEST Prefix",perms:["essentials.sit","essentials.lay","essentials.nick","depth.use","kittycannon.use","bezooka.use","essentials.enderchest","essentials.workbench","essentials.disposal","essentials.condense","essentials.pweather","essentials.craft","essentials.hat"]},
  {name:"IMMORTAL RANK",file:"immortal.png",monthly:"₹99",weekly:"₹49",coins:"667 Coins",kit:"ACE Kit",ah:"15",homes:"18",prefix:"IMMORTAL Prefix",perms:["essentials.sit","bezooka.use","essentials.workbench","essentials.disposal","essentials.condense","essentials.pweather","essentials.hat","essentials.craft","depth.use","kittycannon.use"]},
  {name:"ELITE RANK",file:"elite.png",monthly:"₹49",weekly:"₹24",coins:"333 Coins",kit:"ELITE Kit",ah:"10",homes:"12",prefix:"ELITE Prefix",perms:["essentials.sit","essentials.lay","essentials.craft","essentials.enderchest","essentials.pweather","essentials.disposal","depth.use","kittycannon.use","essentials.hat"]}
@@ -230,10 +230,26 @@ function showHome(){document.querySelectorAll(".view").forEach(v=>v.classList.re
 function showCategory(id){document.querySelectorAll(".view").forEach(v=>v.classList.remove("active"));document.getElementById(id).classList.add("active");window.scrollTo(0,0)}
 function keyOpen(e,id){if(e.key==="Enter"||e.key===" "){e.preventDefault();showCategory(id)}}
 function setPeriod(p,btn){period=p;document.querySelectorAll(".toggle button").forEach(b=>b.classList.remove("active"));btn.classList.add("active");renderRanks()}
+const permissionCommands={
+ "essentials.sit":"/sit",
+ "spin.use":"/spin",
+ "lay.use":"/lay",
+ "essentials.nick":"/nick",
+ "depth.use":"/depth",
+ "kittycannon.use":"/kittycannon",
+ "bezooka.use":"/bezooka",
+ "essentials.enderchest":"/enderchest",
+ "essentials.workbench":"/workbench",
+ "essentials.disposal":"/disposal",
+ "essentials.condense":"/condense",
+ "essentials.pweather":"/pweather",
+ "essentials.craft":"/craft",
+ "essentials.hat":"/hat"
+};
 function openDetails(title,price,perks,perms){
  document.getElementById("modalTitle").textContent=title;
  const perkLines=perks.map((x,i)=>`<div class="lore-line"><span class="arrow" style="color:${["#ff4d54","#ffe23e","#f06bd5","#ff4d54"][i%4]}">▶</span>${esc(x)}</div>`).join("");
- const commandLines=perms.length?perms.map((p,i)=>`<div class="lore-line"><span class="arrow" style="color:${["#24e64a","#ffe23e","#f06bd5","#ff4d54"][i%4]}">▶</span><span class="cyan">${esc(p)}</span></div>`).join(""):"<div class='lore-line'>No extra permissions listed.</div>";
+ const commandLines=perms.length?perms.map((p,i)=>`<div class="lore-line"><span class="arrow" style="color:${["#24e64a","#ffe23e","#f06bd5","#ff4d54"][i%4]}">▶</span><span class="cyan">${esc(permissionCommands[p]||("/"+p.split(".").pop()))}</span></div>`).join(""):"<div class='lore-line'>No extra commands listed.</div>";
  document.getElementById("modalBody").innerHTML=`<div class="lore"><h3 class="lore-title">Rank Perks:</h3>${perkLines}<div class="lore-section">Unlocked Commands:</div>${commandLines}<div class="lore-section">Price:</div><div class="lore-line"><span class="arrow" style="color:#24e64a">▶</span>Price: <span class="lore-price">${esc(price)}</span></div><div class="lore-footer">Create a ticket on Discord to purchase!</div></div>`;
  document.getElementById("detailsModal").classList.add("show");
 }
