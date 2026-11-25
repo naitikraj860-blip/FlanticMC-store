@@ -249,7 +249,8 @@ const permissionCommands={
 function openDetails(title,price,perks,perms){
  document.getElementById("modalTitle").textContent=title;
  const perkLines=perks.map((x,i)=>`<div class="lore-line"><span class="arrow" style="color:${["#ff4d54","#ffe23e","#f06bd5","#ff4d54"][i%4]}">▶</span>${esc(x)}</div>`).join("");
- const commandLines=perms.length?perms.map((p,i)=>`<div class="lore-line"><span class="arrow" style="color:${["#24e64a","#ffe23e","#f06bd5","#ff4d54"][i%4]}">▶</span><span class="cyan">${esc(permissionCommands[p]||("/"+p.split(".").pop()))}</span></div>`).join(""):"<div class='lore-line'>No extra commands listed.</div>";
+ const commands=perms.map(p=>permissionCommands[p]).filter(Boolean);
+ const commandLines=commands.length?commands.map((cmd,i)=>`<div class="lore-line"><span class="arrow" style="color:${["#24e64a","#ffe23e","#f06bd5","#ff4d54"][i%4]}">▶</span><span class="cyan">${esc(cmd)}</span></div>`).join(""):"<div class='lore-line'>No extra commands listed.</div>";
  document.getElementById("modalBody").innerHTML=`<div class="lore"><h3 class="lore-title">Rank Perks:</h3>${perkLines}<div class="lore-section">Unlocked Commands:</div>${commandLines}<div class="lore-section">Price:</div><div class="lore-line"><span class="arrow" style="color:#24e64a">▶</span>Price: <span class="lore-price">${esc(price)}</span></div><div class="lore-footer">Create a ticket on Discord to purchase!</div></div>`;
  document.getElementById("detailsModal").classList.add("show");
 }
