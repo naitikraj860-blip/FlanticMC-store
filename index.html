@@ -196,24 +196,26 @@ a{color:inherit;text-decoration:none}
 .offer-marquee{width:100%;flex:none;text-align:center}
 .topbar .center-logo,.topbar .discord-top{display:none!important}
 .welcome{margin:12px 0 22px;padding:24px 28px;min-height:150px}
-.welcome-currency{flex:0 0 auto;z-index:20}
-.welcome .currency-main{min-width:155px}
+ .welcome{position:relative;justify-content:flex-start}
+.welcome-currency{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);z-index:20;flex:0 0 auto}
+.welcome .currency-main{min-width:145px}
 .ip-copy-wrap{display:flex;justify-content:center;margin:0 0 26px}
 .ip-copy-wrap .join-panel{width:min(560px,100%);min-height:150px;margin:0;padding:24px 18px;border:3px solid #28204f;border-radius:28px;gap:9px}
 .ip-copy-wrap .join-title{font-size:clamp(28px,4vw,42px);letter-spacing:2px}
 .ip-copy-wrap .join-subtitle{font-size:clamp(15px,2.2vw,22px);letter-spacing:1.5px}
 .ip-copy-wrap .join-ip{font-size:12px}
 @media(max-width:560px){
- .welcome{padding:15px;min-height:100px;margin:8px 0 17px;gap:10px}
- .welcome .currency-main{min-width:100px;padding:9px 10px;gap:8px;font-size:11px}
+ .welcome{padding:15px;min-height:112px;margin:8px 0 17px;gap:10px}
+ .welcome-currency{left:50%;top:auto;bottom:8px;transform:translateX(-50%)}
+ .welcome .currency-main{min-width:100px;padding:7px 10px;gap:8px;font-size:10px}
  .welcome .logo-image{width:52px;height:52px;flex-basis:52px}
  .welcome h1{font-size:18px}
  .welcome p{font-size:12px}
  .ip-copy-wrap{margin-bottom:20px}
- .ip-copy-wrap .join-panel{min-height:120px;padding:20px 12px;border-radius:23px}
- .ip-copy-wrap .join-title{font-size:27px}
- .ip-copy-wrap .join-subtitle{font-size:15px}
- .ip-copy-wrap .join-ip{font-size:10px}
+ .ip-copy-wrap .join-panel{width:min(310px,88%);min-height:82px;padding:13px 10px;border-radius:18px}
+ .ip-copy-wrap .join-title{font-size:22px}
+ .ip-copy-wrap .join-subtitle{font-size:12px}
+ .ip-copy-wrap .join-ip{font-size:9px}
 }
 </style>
 </head>
@@ -410,7 +412,7 @@ function formatPrice(amount){
  const settings=currencySettings[selectedCurrency];
  const discounted=amount*(1-DISCOUNT_RATE)*settings.rate;
  const original=amount*settings.rate;
- const decimals=selectedCurrency==="USD"?2:0;
+ const decimals=(selectedCurrency==="USD"||selectedCurrency==="PKR")?2:0;
  const formatter=new Intl.NumberFormat("en-US",{minimumFractionDigits:decimals,maximumFractionDigits:decimals});
  return {
   original:settings.symbol+formatter.format(original),
