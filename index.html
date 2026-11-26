@@ -165,62 +165,44 @@ a{color:inherit;text-decoration:none}
 }
 @media(prefers-reduced-motion:reduce){*{scroll-behavior:auto!important;transition:none!important}}
 
-/* Winter offer and compact controls */
-.topbar{display:block;padding:12px 18px;min-height:0;background:#111318;border-bottom:1px solid #30363c}
-.offer-marquee{width:100%;flex:none;text-align:center}
-.ip-copy-wrap{display:flex;justify-content:center;margin:0 0 24px}
-.ip-copy-small{display:inline-flex;align-items:center;justify-content:center;gap:10px;min-height:40px;padding:0 17px;border:1px solid #3e7185;border-radius:9px;background:#1c3039;color:#bcecff;font-size:12px;font-weight:900;letter-spacing:.35px;cursor:pointer;box-shadow:0 4px 14px #0003;transition:background .18s,transform .18s}
-.ip-copy-small:hover{background:#254655;transform:translateY(-1px)}
-.currency-area{display:flex;flex-direction:column;align-items:center;gap:9px;margin:4px 0 24px;padding:18px 14px;border:1px solid var(--line);border-radius:13px;background:var(--panel)}
-.currency-heading{font-size:12px;font-weight:900;letter-spacing:1.2px;color:#dce5eb}
-.currency-selector{display:flex;justify-content:center;gap:9px;flex-wrap:wrap}
-.currency-btn{min-width:105px;padding:10px 17px;border:1px solid #48535c;border-radius:9px;background:#252a30;color:#d8e0e6;font-weight:900;cursor:pointer;transition:background .18s,border-color .18s}
-.currency-btn.active{background:var(--blue);border-color:var(--blue);color:#063d55}
-.discount-caption{font-size:11px;font-weight:900;letter-spacing:.5px;color:#ffe28a;text-align:center}
+
+/* Centered currency selector and server IP copy button */
+.center-controls{display:flex;flex-direction:column;align-items:center;gap:15px;margin:6px 0 30px}
+.currency-dropdown{position:relative;display:flex;justify-content:center;z-index:15}
+.currency-main{display:flex;align-items:center;justify-content:space-between;gap:18px;min-width:122px;padding:10px 15px;background:var(--gold);color:#684d00;border:1px solid #e5b92e;border-radius:8px;font-size:13px;font-weight:900;cursor:pointer;box-shadow:0 4px 14px #0003}
+.currency-main:hover{filter:brightness(1.06)}
+.currency-options{display:none;position:absolute;top:calc(100% + 7px);left:50%;transform:translateX(-50%);min-width:145px;background:var(--gold);border:1px solid #e5b92e;border-radius:9px;padding:6px;box-shadow:0 8px 25px #0008}
+.currency-options.show{display:flex;flex-direction:column}
+.currency-options button{background:transparent;border:0;padding:10px 12px;text-align:left;color:#684d00;font-size:13px;font-weight:900;border-radius:6px;cursor:pointer}
+.currency-options button:hover{background:#fff0a8}
+.center-controls .join-panel{width:min(420px,100%);min-height:100px;margin:0;padding:18px 20px;border:2px solid #28204f;border-radius:18px;gap:7px}
+.center-controls .join-title{font-size:22px;letter-spacing:1.5px}
+.center-controls .join-subtitle{font-size:14px;letter-spacing:1px}
+.center-controls .join-ip{font-size:12px}
 .price .old-price{display:block;margin-bottom:3px;color:#89939b;font-size:13px;font-weight:700;text-decoration:line-through}
 .price .discount-price{display:block;color:var(--gold);font-size:21px;font-weight:900}
 .item .price{line-height:1.25}
 @media(max-width:560px){
- .topbar{padding:10px 12px;min-height:0}
- .offer-marquee{padding:11px 0;font-size:11px}
- .ip-copy-wrap{margin-bottom:18px}
- .ip-copy-small{min-height:38px;padding:0 12px;font-size:10px}
- .currency-area{margin:2px 0 18px;padding:15px 10px}
- .currency-btn{min-width:88px;padding:9px 12px;font-size:12px}
- .discount-caption{font-size:9px}
+ .center-controls{gap:12px;margin:3px 0 22px}
+ .center-controls .join-panel{min-height:88px;padding:15px}
+ .center-controls .join-title{font-size:19px}
+ .center-controls .join-subtitle{font-size:12px}
  .price .discount-price{font-size:19px}
 }
-
 </style>
 </head>
 <body>
 <header class="topbar">
  <div class="offer-marquee" role="status" aria-label="Winter offer">
-  <div class="offer-track">
-   <span>❄ WINTER OFFER · 25% OFF · LIMITED TIME ONLY ❄</span>
-   <span>❄ WINTER OFFER · 25% OFF · LIMITED TIME ONLY ❄</span>
-   <span>❄ WINTER OFFER · 25% OFF · LIMITED TIME ONLY ❄</span>
-  </div>
+  <div class="offer-track"><span>❄ WINTER OFFER · 25% OFF · LIMITED TIME ONLY ❄</span><span>❄ WINTER OFFER · 25% OFF · LIMITED TIME ONLY ❄</span><span>❄ WINTER OFFER · 25% OFF · LIMITED TIME ONLY ❄</span></div>
  </div>
+ <img class="center-logo" src="assets/logo1.png" alt="FlanticMC logo" onerror="this.style.display='none'">
+ <a class="top-link discord-top" href="https://discord.gg/4AWzyq63SP" target="_blank" rel="noopener">Discord</a>
 </header>
 <main class="container">
 <section id="home" class="view active">
- <div class="ip-copy-wrap">
-  <button class="ip-copy-small" type="button" onclick="copyServerIP()">
-   <span class="copy-symbol" aria-hidden="true"></span>
-   <span id="joinStatus" aria-live="polite">COPY SERVER IP · play.flaticmc.space:25568</span>
-  </button>
- </div>
 
- <div class="currency-area">
-  <div class="currency-heading">SELECT CURRENCY</div>
-  <div class="currency-selector" role="group" aria-label="Select store currency">
-   <button type="button" class="currency-btn active" data-currency="INR" onclick="setCurrency('INR',this)">🇮🇳 INR</button>
-   <button type="button" class="currency-btn" data-currency="PKR" onclick="setCurrency('PKR',this)">🇵🇰 PKR</button>
-   <button type="button" class="currency-btn" data-currency="USD" onclick="setCurrency('USD',this)">🇺🇸 USD</button>
-  </div>
-  <div class="discount-caption">❄ 25% WINTER DISCOUNT APPLIED AUTOMATICALLY ❄</div>
- </div>
+
  <div class="category-grid">
   <div class="category-card" role="button" tabindex="0" onclick="showCategory('ranks')" onkeydown="keyOpen(event,'ranks')">
    <div class="category-copy"><h2>LIFESTEAL<br>RANKS</h2><p>Click to view</p></div>
@@ -234,6 +216,24 @@ a{color:inherit;text-decoration:none}
    <div class="category-copy"><h2>CRATE<br>KEYS</h2><p>Click to view</p></div>
    <img class="category-image" src="assets/home-keys.png" alt="" onerror="this.style.visibility='hidden'">
   </div>
+ </div>
+
+ <div class="center-controls">
+  <div class="currency-dropdown">
+   <button class="currency-main" type="button" onclick="toggleCurrency()" aria-expanded="false" aria-controls="currencyOptions">
+    <span id="selectedCurrency">🇮🇳 INR</span><span aria-hidden="true">⌄</span>
+   </button>
+   <div class="currency-options" id="currencyOptions">
+    <button type="button" onclick="chooseCurrency('INR','🇮🇳 INR')">🇮🇳 INR</button>
+    <button type="button" onclick="chooseCurrency('PKR','🇵🇰 PKR')">🇵🇰 PKR</button>
+    <button type="button" onclick="chooseCurrency('USD','🇺🇸 USD')">🇺🇸 USD</button>
+   </div>
+  </div>
+  <button class="join-panel" type="button" onclick="copyServerIP()" aria-label="Copy FlanticMC server IP">
+   <span class="join-title">COPY SERVER IP</span>
+   <span class="join-subtitle">TAP TO COPY</span>
+   <span class="join-ip" id="joinStatus" aria-live="polite">play.flaticmc.space:25568</span>
+  </button>
  </div>
 
  <div class="info-grid">
@@ -255,7 +255,7 @@ a{color:inherit;text-decoration:none}
  <button class="back" onclick="showHome()">← Homepage</button>
  <div class="section-head"><div><h2>LIFESTEAL RANKS</h2><p>Choose a package duration to view rank prices.</p></div><div class="toggle"><button class="active" onclick="setPeriod('monthly',this)">Monthly</button><button onclick="setPeriod('weekly',this)">7 Days</button></div></div>
  <div id="rankItems" class="items"></div>
- <div class="note"><b>Important Notes</b><br>Monthly ranks are valid for 30 days. 7 Days ranks are valid for 7 days only and do not include Coins. GOD Rank is available in both Monthly and 7 Days packages. The 7 Days GOD Rank price is shown in your selected currency with the winter discount applied. All other perks and permissions remain the same. Create a ticket to purchase any rank.</div>
+ <div class="note"><b>Important Notes</b><br>Monthly ranks are valid for 30 days. 7 Days ranks are valid for 7 days only and do not include Coins. GOD Rank is available in both Monthly and 7 Days packages. All prices automatically include the 25% Winter Offer and use your selected currency. All other perks and permissions remain the same. Create a ticket to purchase any rank.</div>
 </section>
 <section id="coins" class="view">
  <button class="back" onclick="showHome()">← Homepage</button>
@@ -296,44 +296,7 @@ const keyData=[
  ["SPAWNER KEYS · 3x","₹30","spawner.png"],
  ["PARTY KEYS · 3x","₹45","party.png"]
 ];
-
 let period="monthly";
-let currentCurrency="INR";
-const currencyConfig={
- INR:{symbol:"₹",rate:1},
- PKR:{symbol:"Rs ",rate:3.35},
- USD:{symbol:"$",rate:0.0117}
-};
-const WINTER_DISCOUNT=0.25;
-
-function setCurrency(code,btn){
- currentCurrency=code;
- document.querySelectorAll(".currency-btn").forEach(b=>b.classList.toggle("active",b===btn));
- renderAllPrices();
-}
-function numericPrice(value){
- const n=Number(String(value).replace(/[^0-9.]/g,""));
- return Number.isFinite(n)?n:0;
-}
-function formatMoney(amount){
- const cfg=currencyConfig[currentCurrency];
- return cfg.symbol+Math.round(amount).toLocaleString("en-US");
-}
-function priceValues(baseValue){
- const base=numericPrice(baseValue);
- const rate=currencyConfig[currentCurrency].rate;
- return {original:formatMoney(base*rate),final:formatMoney(base*(1-WINTER_DISCOUNT)*rate)};
-}
-function priceMarkup(baseValue){
- const p=priceValues(baseValue);
- return `<span class="old-price">${esc(p.original)}</span><span class="discount-price">${esc(p.final)} <small>· 25% OFF</small></span>`;
-}
-function renderAllPrices(){
- renderRanks();
- renderSimple(coinData,"coinItems","Use /coinshop in-game to spend your coins.");
- renderSimple(keyData,"keyItems","Create a ticket on Discord to purchase this key.");
-}
-
 function esc(v){return String(v).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]))}
 function showHome(){document.querySelectorAll(".view").forEach(v=>v.classList.remove("active"));document.getElementById("home").classList.add("active");window.scrollTo(0,0)}
 function showCategory(id){document.querySelectorAll(".view").forEach(v=>v.classList.remove("active"));document.getElementById(id).classList.add("active");window.scrollTo(0,0)}
@@ -382,18 +345,70 @@ async function copyServerIP(){
   if(footerStatus)footerStatus.textContent="Server IP: "+value;
  }
 }
+const DISCOUNT_RATE=0.25;
+const currencySettings={
+ INR:{rate:1,symbol:"₹",flag:"🇮🇳",name:"INR"},
+ PKR:{rate:3.30,symbol:"Rs.",flag:"🇵🇰",name:"PKR"},
+ USD:{rate:0.012,symbol:"$",flag:"🇺🇸",name:"USD"}
+};
+let selectedCurrency="INR";
+function toggleCurrency(){
+ const menu=document.getElementById("currencyOptions");
+ const button=document.querySelector(".currency-main");
+ const open=menu.classList.toggle("show");
+ button.setAttribute("aria-expanded",String(open));
+}
+function chooseCurrency(code,label){
+ selectedCurrency=code;
+ document.getElementById("selectedCurrency").textContent=label;
+ document.getElementById("currencyOptions").classList.remove("show");
+ document.querySelector(".currency-main").setAttribute("aria-expanded","false");
+ renderRanks();
+ renderSimple(coinData,"coinItems","Use /coinshop in-game to spend your coins.");
+ renderSimple(keyData,"keyItems","Create a ticket on Discord to purchase this key.");
+}
+document.addEventListener("click",function(event){
+ const dropdown=document.querySelector(".currency-dropdown");
+ if(dropdown&&!dropdown.contains(event.target)){
+  document.getElementById("currencyOptions").classList.remove("show");
+  document.querySelector(".currency-main").setAttribute("aria-expanded","false");
+ }
+});
+function amountFromPrice(value){return Number(String(value).replace(/[^0-9.]/g,""))||0}
+function formatPrice(amount){
+ const settings=currencySettings[selectedCurrency];
+ const discounted=amount*(1-DISCOUNT_RATE)*settings.rate;
+ const original=amount*settings.rate;
+ const decimals=selectedCurrency==="USD"?2:0;
+ const formatter=new Intl.NumberFormat("en-US",{minimumFractionDigits:decimals,maximumFractionDigits:decimals});
+ return {
+  original:settings.symbol+formatter.format(original),
+  discounted:settings.symbol+formatter.format(discounted)
+ };
+}
+function priceMarkup(amount){
+ const prices=formatPrice(amount);
+ return `<span class="old-price">${esc(prices.original)}</span><span class="discount-price">${esc(prices.discounted)}</span>`;
+}
 function renderRanks(){
  document.getElementById("rankItems").innerHTML=rankData.filter(r=>period==="monthly"||r.weekly).map(r=>{
-  const basePrice=period==="monthly"?r.monthly:r.weekly;
-   const price=priceValues(basePrice).final;
+  const rawPrice=amountFromPrice(period==="monthly"?r.monthly:r.weekly);
+  const prices=formatPrice(rawPrice);
+  const price=prices.discounted;
   const perks=[...(period==="monthly"&&r.coins?[r.coins]:[]),`Access to ${r.kit}`,`Create up to ${r.ah} Auction House Listings`,...(r.vault?[`Access to ${r.vault}`]:[]),`Set up to ${r.homes} Homes`,r.prefix];
-  return `<article class="item"><img class="item-img" src="assets/${r.file}" alt="" onerror="this.style.visibility='hidden'"><div class="item-info"><h3>${esc(r.name)}</h3><div class="extra">${period==="monthly"?"[ MONTHLY · 30 DAYS ]":"[ 7 DAYS ]"}</div><div class="price">${priceMarkup(basePrice)}</div><button class="info-btn" onclick='openDetails(${JSON.stringify(r.name)},${JSON.stringify(price)},${JSON.stringify(perks)},${JSON.stringify(r.perms)})'>View Details</button></div></article>`;
+  return `<article class="item"><img class="item-img" src="assets/${r.file}" alt="" onerror="this.style.visibility='hidden'"><div class="item-info"><h3>${esc(r.name)}</h3><div class="extra">${period==="monthly"?"[ MONTHLY · 30 DAYS ]":"[ 7 DAYS ]"}</div><div class="price">${priceMarkup(rawPrice)}</div><button class="info-btn" onclick='openDetails(${JSON.stringify(r.name)},${JSON.stringify(price)},${JSON.stringify(perks)},${JSON.stringify(r.perms)})'>View Details</button></div></article>`;
  }).join("");
 }
 function renderSimple(data,target,desc){
- document.getElementById(target).innerHTML=data.map(x=>`<article class="item"><img class="item-img" src="assets/${x[2]}" alt="" onerror="this.style.visibility='hidden'"><div class="item-info"><h3>${esc(x[0])}</h3><div class="price">${priceMarkup(x[1])}</div><button class="info-btn" onclick='openSimpleDetails(${JSON.stringify(x[0])},${JSON.stringify(priceValues(x[1]).final)},${JSON.stringify(desc)})'>View Details</button></div></article>`).join("");
+ document.getElementById(target).innerHTML=data.map(x=>{
+  const rawPrice=amountFromPrice(x[1]);
+  const prices=formatPrice(rawPrice);
+  return `<article class="item"><img class="item-img" src="assets/${x[2]}" alt="" onerror="this.style.visibility='hidden'"><div class="item-info"><h3>${esc(x[0])}</h3><div class="price">${priceMarkup(rawPrice)}</div><button class="info-btn" onclick='openSimpleDetails(${JSON.stringify(x[0])},${JSON.stringify(prices.discounted)},${JSON.stringify(desc)})'>View Details</button></div></article>`;
+ }).join("");
 }
-renderAllPrices();
+renderRanks();
+renderSimple(coinData,"coinItems","Use /coinshop in-game to spend your coins.");
+renderSimple(keyData,"keyItems","Create a ticket on Discord to purchase this key.");
 </script>
 </body>
 </html>
