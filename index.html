@@ -189,6 +189,32 @@ a{color:inherit;text-decoration:none}
  .center-controls .join-subtitle{font-size:12px}
  .price .discount-price{font-size:19px}
 }
+
+
+/* Revised store header: currency in preview badge, IP copy above categories */
+.topbar{display:block;width:100%;max-width:none;padding:12px 18px;min-height:0;background:#111318;border-bottom:1px solid #30363c}
+.offer-marquee{width:100%;flex:none;text-align:center}
+.topbar .center-logo,.topbar .discord-top{display:none!important}
+.welcome{margin:12px 0 22px;padding:24px 28px;min-height:150px}
+.welcome-currency{flex:0 0 auto;z-index:20}
+.welcome .currency-main{min-width:155px}
+.ip-copy-wrap{display:flex;justify-content:center;margin:0 0 26px}
+.ip-copy-wrap .join-panel{width:min(560px,100%);min-height:150px;margin:0;padding:24px 18px;border:3px solid #28204f;border-radius:28px;gap:9px}
+.ip-copy-wrap .join-title{font-size:clamp(28px,4vw,42px);letter-spacing:2px}
+.ip-copy-wrap .join-subtitle{font-size:clamp(15px,2.2vw,22px);letter-spacing:1.5px}
+.ip-copy-wrap .join-ip{font-size:12px}
+@media(max-width:560px){
+ .welcome{padding:15px;min-height:100px;margin:8px 0 17px;gap:10px}
+ .welcome .currency-main{min-width:100px;padding:9px 10px;gap:8px;font-size:11px}
+ .welcome .logo-image{width:52px;height:52px;flex-basis:52px}
+ .welcome h1{font-size:18px}
+ .welcome p{font-size:12px}
+ .ip-copy-wrap{margin-bottom:20px}
+ .ip-copy-wrap .join-panel{min-height:120px;padding:20px 12px;border-radius:23px}
+ .ip-copy-wrap .join-title{font-size:27px}
+ .ip-copy-wrap .join-subtitle{font-size:15px}
+ .ip-copy-wrap .join-ip{font-size:10px}
+}
 </style>
 </head>
 <body>
@@ -196,12 +222,35 @@ a{color:inherit;text-decoration:none}
  <div class="offer-marquee" role="status" aria-label="Winter offer">
   <div class="offer-track"><span>❄ WINTER OFFER · 25% OFF · LIMITED TIME ONLY ❄</span><span>❄ WINTER OFFER · 25% OFF · LIMITED TIME ONLY ❄</span><span>❄ WINTER OFFER · 25% OFF · LIMITED TIME ONLY ❄</span></div>
  </div>
- <img class="center-logo" src="assets/logo1.png" alt="FlanticMC logo" onerror="this.style.display='none'">
- <a class="top-link discord-top" href="https://discord.gg/4AWzyq63SP" target="_blank" rel="noopener">Discord</a>
 </header>
 <main class="container">
 <section id="home" class="view active">
 
+
+ <div class="welcome">
+  <div class="welcome-left">
+   <img class="logo-image" src="assets/logo1.png" alt="FlanticMC logo" onerror="this.style.display='none'">
+   <div><h1>FLANTICMC</h1><p>Welcome to our store!</p></div>
+  </div>
+  <div class="currency-dropdown welcome-currency">
+   <button class="currency-main" type="button" onclick="toggleCurrency()" aria-expanded="false" aria-controls="currencyOptions">
+    <span id="selectedCurrency">🇮🇳 INR</span><span aria-hidden="true">⌄</span>
+   </button>
+   <div class="currency-options" id="currencyOptions">
+    <button type="button" onclick="chooseCurrency('INR','🇮🇳 INR')">🇮🇳 INR</button>
+    <button type="button" onclick="chooseCurrency('PKR','🇵🇰 PKR')">🇵🇰 PKR</button>
+    <button type="button" onclick="chooseCurrency('USD','🇺🇸 USD')">🇺🇸 USD</button>
+   </div>
+  </div>
+ </div>
+
+ <div class="ip-copy-wrap">
+  <button class="join-panel" type="button" onclick="copyServerIP()" aria-label="Copy FlanticMC server IP">
+   <span class="join-title">IP COPY</span>
+   <span class="join-subtitle">CLICK TO COPY</span>
+   <span class="join-ip" id="joinStatus" aria-live="polite">play.flaticmc.space:25568</span>
+  </button>
+ </div>
 
  <div class="category-grid">
   <div class="category-card" role="button" tabindex="0" onclick="showCategory('ranks')" onkeydown="keyOpen(event,'ranks')">
@@ -216,24 +265,6 @@ a{color:inherit;text-decoration:none}
    <div class="category-copy"><h2>CRATE<br>KEYS</h2><p>Click to view</p></div>
    <img class="category-image" src="assets/home-keys.png" alt="" onerror="this.style.visibility='hidden'">
   </div>
- </div>
-
- <div class="center-controls">
-  <div class="currency-dropdown">
-   <button class="currency-main" type="button" onclick="toggleCurrency()" aria-expanded="false" aria-controls="currencyOptions">
-    <span id="selectedCurrency">🇮🇳 INR</span><span aria-hidden="true">⌄</span>
-   </button>
-   <div class="currency-options" id="currencyOptions">
-    <button type="button" onclick="chooseCurrency('INR','🇮🇳 INR')">🇮🇳 INR</button>
-    <button type="button" onclick="chooseCurrency('PKR','🇵🇰 PKR')">🇵🇰 PKR</button>
-    <button type="button" onclick="chooseCurrency('USD','🇺🇸 USD')">🇺🇸 USD</button>
-   </div>
-  </div>
-  <button class="join-panel" type="button" onclick="copyServerIP()" aria-label="Copy FlanticMC server IP">
-   <span class="join-title">COPY SERVER IP</span>
-   <span class="join-subtitle">TAP TO COPY</span>
-   <span class="join-ip" id="joinStatus" aria-live="polite">play.flaticmc.space:25568</span>
-  </button>
  </div>
 
  <div class="info-grid">
